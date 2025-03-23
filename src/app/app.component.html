@@ -1,0 +1,53 @@
+<div class="app-container" [class.dark-mode]="isDarkMode" [class.collapsed]="isSidebarCollapsed">
+  <!-- Sidebar -->
+  <div class="sidebar" *ngIf="auth.isAuthenticated$ | async" [class.collapsed]="isSidebarCollapsed">
+    <div class="sidebar-header">
+      <div class="logo">
+        <img src="assets/svg/logo.png" alt="Gym Logo">
+        <h2 *ngIf="!isSidebarCollapsed">FitHub</h2>
+      </div>
+      <button class="collapse-btn" (click)="toggleSidebar()">
+        <i class="fas" [class.fa-chevron-left]="!isSidebarCollapsed" [class.fa-chevron-right]="isSidebarCollapsed"></i>
+      </button>
+    </div>
+    
+    <nav class="nav-menu">
+      <button [class.active]="isActive('dashboard')" routerLink="/dashboard">
+        <i class="fas fa-home"></i>
+        <span *ngIf="!isSidebarCollapsed">Dashboard</span>
+      </button>
+      <button [class.active]="isActive('members')" routerLink="/members">
+        <i class="fas fa-users"></i>
+        <span *ngIf="!isSidebarCollapsed">Members</span>
+      </button>
+      <button [class.active]="isActive('classes')" routerLink="/classes">
+        <i class="fas fa-dumbbell"></i>
+        <span *ngIf="!isSidebarCollapsed">Classes</span>
+      </button>
+      <button [class.active]="isActive('trainers')" routerLink="/trainers">
+        <i class="fas fa-user-tie"></i>
+        <span *ngIf="!isSidebarCollapsed">Trainers</span>
+      </button>
+      <button [class.active]="isActive('payments')" routerLink="/payments">
+        <i class="fas fa-credit-card"></i>
+        <span *ngIf="!isSidebarCollapsed">Payments</span>
+      </button>
+    </nav>
+
+    <div class="sidebar-footer">
+      <button class="theme-toggle" (click)="toggleDarkMode()">
+        <i class="fas" [class.fa-moon]="!isDarkMode" [class.fa-sun]="isDarkMode"></i>
+        <span *ngIf="!isSidebarCollapsed">{{isDarkMode ? 'Light Mode' : 'Dark Mode'}}</span>
+      </button>
+      <button class="logout-btn" (click)="logout()">
+        <i class="fas fa-sign-out-alt"></i>
+        <span *ngIf="!isSidebarCollapsed">Logout</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <div class="main-content" [class.with-sidebar]="auth.isAuthenticated$ | async" [class.sidebar-collapsed]="isSidebarCollapsed">
+    <router-outlet></router-outlet>
+  </div>
+</div>

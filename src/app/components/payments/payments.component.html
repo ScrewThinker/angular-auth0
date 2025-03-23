@@ -1,0 +1,109 @@
+<div class="payments-container">
+  <div class="header">
+    <h2>Payment Management</h2>
+    <button class="add-button" (click)="showAddPayment = true">
+      <i class="fas fa-plus"></i> Add Payment
+    </button>
+  </div>
+
+  <div class="payments-table">
+    <table>
+      <thead>
+        <tr>
+          <th>Member</th>
+          <th>Amount</th>
+          <th>Date</th>
+          <th>Type</th>
+          <th>Method</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let payment of payments">
+          <td>{{payment.memberName}}</td>
+          <td>${{payment.amount.toFixed(2)}}</td>
+          <td>{{payment.date}}</td>
+          <td>{{payment.type}}</td>
+          <td>
+            <span class="payment-method">
+              <i class="fas" [ngClass]="{
+                'fa-credit-card': payment.method === 'Credit Card',
+                'fa-paypal': payment.method === 'PayPal',
+                'fa-money-bill': payment.method === 'Cash'
+              }"></i>
+              {{payment.method}}
+            </span>
+          </td>
+          <td>
+            <span class="status-badge" [ngClass]="getStatusColor(payment.status)">
+              {{payment.status}}
+            </span>
+          </td>
+          <td>
+            <div class="actions">
+              <button class="action-button" title="View Details">
+                <i class="fas fa-eye"></i>
+              </button>
+              <button class="action-button" title="Print Receipt">
+                <i class="fas fa-print"></i>
+              </button>
+              <button class="action-button delete" (click)="deletePayment(payment.id)" title="Delete">
+                <i class="fas fa-trash"></i>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Add Payment Modal -->
+  <div class="modal" *ngIf="showAddPayment">
+    <div class="modal-content">
+      <h3>Add New Payment</h3>
+      <form (submit)="addPayment()">
+        <div class="form-group">
+          <label>Member Name</label>
+          <input type="text" [(ngModel)]="newPayment.memberName" name="memberName" required>
+        </div>
+        <div class="form-group">
+          <label>Amount</label>
+          <input type="number" [(ngModel)]="newPayment.amount" name="amount" step="0.01" required>
+        </div>
+        <div class="form-group">
+          <label>Date</label>
+          <input type="date" [(ngModel)]="newPayment.date" name="date" required>
+        </div>
+        <div class="form-group">
+          <label>Payment Type</label>
+          <select [(ngModel)]="newPayment.type" name="type">
+            <option value="Monthly Membership">Monthly Membership</option>
+            <option value="Personal Training">Personal Training</option>
+            <option value="Group Class">Group Class</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Payment Method</label>
+          <select [(ngModel)]="newPayment.method" name="method">
+            <option value="Credit Card">Credit Card</option>
+            <option value="PayPal">PayPal</option>
+            <option value="Cash">Cash</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Status</label>
+          <select [(ngModel)]="newPayment.status" name="status">
+            <option value="completed">Completed</option>
+            <option value="pending">Pending</option>
+            <option value="failed">Failed</option>
+          </select>
+        </div>
+        <div class="modal-actions">
+          <button type="button" (click)="showAddPayment = false">Cancel</button>
+          <button type="submit">Add Payment</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

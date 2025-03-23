@@ -1,0 +1,243 @@
+.classes-container {
+  padding: 2rem;
+  
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+
+    h2 {
+      margin: 0;
+      color: #2c3e50;
+    }
+
+    .add-button {
+      padding: 0.75rem 1.5rem;
+      background: #3498db;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: all 0.3s ease;
+
+      &:hover {
+        background: #2980b9;
+      }
+    }
+  }
+}
+
+.classes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+
+.class-card {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+  transition: transform 0.3s ease;
+
+  &:hover {
+    transform: translateY(-5px);
+  }
+
+  .class-header {
+    padding: 1.5rem;
+    color: white;
+    position: relative;
+
+    &.beginner { background: #3498db; }
+    &.intermediate { background: #f39c12; }
+    &.advanced { background: #e74c3c; }
+
+    h3 {
+      margin: 0;
+      font-size: 1.5rem;
+    }
+
+    .level-badge {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      padding: 0.25rem 0.75rem;
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.2);
+      font-size: 0.8rem;
+    }
+  }
+
+  .class-info {
+    padding: 1.5rem;
+
+    p {
+      margin: 0.5rem 0;
+      color: #7f8c8d;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+
+      i {
+        color: #3498db;
+      }
+    }
+
+    .enrollment-status {
+      margin-top: 1rem;
+
+      .enrollment-text {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 0.5rem;
+        color: #7f8c8d;
+        font-size: 0.9rem;
+      }
+
+      .enrollment-bar {
+        height: 8px;
+        background: #eee;
+        border-radius: 4px;
+        overflow: hidden;
+
+        .enrollment-progress {
+          height: 100%;
+          transition: width 0.3s ease;
+
+          &.low { background: #2ecc71; }
+          &.medium { background: #f39c12; }
+          &.high { background: #e74c3c; }
+        }
+      }
+    }
+  }
+
+  .class-actions {
+    padding: 1rem;
+    border-top: 1px solid #eee;
+    display: flex;
+    justify-content: space-between;
+    gap: 0.5rem;
+
+    .action-button {
+      padding: 0.5rem 1rem;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+
+      &:not(.delete) {
+        background: #3498db;
+        color: white;
+
+        &:hover:not(:disabled) {
+          background: #2980b9;
+        }
+
+        &:disabled {
+          background: #bdc3c7;
+          cursor: not-allowed;
+        }
+      }
+
+      &.delete {
+        background: #f8f9fa;
+        color: #e74c3c;
+
+        &:hover {
+          background: #fee;
+        }
+      }
+    }
+  }
+}
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+
+  .modal-content {
+    background: white;
+    padding: 2rem;
+    border-radius: 12px;
+    width: 100%;
+    max-width: 500px;
+
+    h3 {
+      margin: 0 0 1.5rem;
+      color: #2c3e50;
+    }
+
+    .form-group {
+      margin-bottom: 1rem;
+
+      label {
+        display: block;
+        margin-bottom: 0.5rem;
+        color: #2c3e50;
+      }
+
+      input, select {
+        width: 100%;
+        padding: 0.75rem;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        font-size: 1rem;
+
+        &:focus {
+          outline: none;
+          border-color: #3498db;
+        }
+      }
+    }
+
+    .modal-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 1rem;
+      margin-top: 2rem;
+
+      button {
+        padding: 0.75rem 1.5rem;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+
+        &:first-child {
+          background: #eee;
+          color: #2c3e50;
+
+          &:hover {
+            background: #ddd;
+          }
+        }
+
+        &:last-child {
+          background: #3498db;
+          color: white;
+
+          &:hover {
+            background: #2980b9;
+          }
+        }
+      }
+    }
+  }
+}

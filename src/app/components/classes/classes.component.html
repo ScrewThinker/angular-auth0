@@ -1,0 +1,86 @@
+<div class="classes-container">
+  <div class="header">
+    <h2>Fitness Classes</h2>
+    <button class="add-button" (click)="showAddClass = true">
+      <i class="fas fa-plus"></i> Add Class
+    </button>
+  </div>
+
+  <div class="classes-grid">
+    <div class="class-card" *ngFor="let class of classes">
+      <div class="class-header" [ngClass]="class.level.toLowerCase()">
+        <h3>{{class.name}}</h3>
+        <span class="level-badge">{{class.level}}</span>
+      </div>
+      
+      <div class="class-info">
+        <p><i class="fas fa-user-tie"></i> {{class.instructor}}</p>
+        <p><i class="fas fa-clock"></i> {{class.schedule}}</p>
+        <p><i class="fas fa-hourglass-half"></i> {{class.duration}}</p>
+        
+        <div class="enrollment-status">
+          <div class="enrollment-text">
+            <span>Enrollment</span>
+            <span>{{class.enrolled}}/{{class.capacity}}</span>
+          </div>
+          <div class="enrollment-bar">
+            <div class="enrollment-progress" 
+                 [style.width.%]="(class.enrolled/class.capacity)*100"
+                 [ngClass]="getEnrollmentStatus(class)">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="class-actions">
+        <button class="action-button" [disabled]="class.enrolled >= class.capacity">
+          <i class="fas fa-user-plus"></i> Enroll
+        </button>
+        <button class="action-button delete" (click)="deleteClass(class.id)">
+          <i class="fas fa-trash"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Add Class Modal -->
+  <div class="modal" *ngIf="showAddClass">
+    <div class="modal-content">
+      <h3>Add New Class</h3>
+      <form (submit)="addClass()">
+        <div class="form-group">
+          <label>Class Name</label>
+          <input type="text" [(ngModel)]="newClass.name" name="name" required>
+        </div>
+        <div class="form-group">
+          <label>Instructor</label>
+          <input type="text" [(ngModel)]="newClass.instructor" name="instructor" required>
+        </div>
+        <div class="form-group">
+          <label>Schedule</label>
+          <input type="text" [(ngModel)]="newClass.schedule" name="schedule" required>
+        </div>
+        <div class="form-group">
+          <label>Duration</label>
+          <input type="text" [(ngModel)]="newClass.duration" name="duration" required>
+        </div>
+        <div class="form-group">
+          <label>Capacity</label>
+          <input type="number" [(ngModel)]="newClass.capacity" name="capacity" required>
+        </div>
+        <div class="form-group">
+          <label>Level</label>
+          <select [(ngModel)]="newClass.level" name="level">
+            <option value="Beginner">Beginner</option>
+            <option value="Intermediate">Intermediate</option>
+            <option value="Advanced">Advanced</option>
+          </select>
+        </div>
+        <div class="modal-actions">
+          <button type="button" (click)="showAddClass = false">Cancel</button>
+          <button type="submit">Add Class</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

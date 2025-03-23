@@ -1,0 +1,94 @@
+<div class="trainers-container">
+  <div class="header">
+    <h2>Our Trainers</h2>
+    <button class="add-button" (click)="showAddTrainer = true">
+      <i class="fas fa-plus"></i> Add Trainer
+    </button>
+  </div>
+
+  <div class="trainers-grid">
+    <div class="trainer-card" *ngFor="let trainer of trainers">
+      <div class="trainer-header">
+        <img [src]="trainer.image" [alt]="trainer.name">
+        <div class="trainer-rating">
+          <div class="stars">
+            <i class="fas fa-star" *ngFor="let star of getRatingStars(trainer.rating)"></i>
+            <i class="far fa-star" *ngFor="let star of getRatingStars(5 - trainer.rating)"></i>
+          </div>
+          <span>{{trainer.rating}}</span>
+        </div>
+      </div>
+
+      <div class="trainer-info">
+        <h3>{{trainer.name}}</h3>
+        <p class="specialization">{{trainer.specialization}}</p>
+        
+        <div class="info-grid">
+          <div class="info-item">
+            <i class="fas fa-clock"></i>
+            <div>
+              <span>Availability</span>
+              <p>{{trainer.availability}}</p>
+            </div>
+          </div>
+          <div class="info-item">
+            <i class="fas fa-briefcase"></i>
+            <div>
+              <span>Experience</span>
+              <p>{{trainer.experience}}</p>
+            </div>
+          </div>
+          <div class="info-item">
+            <i class="fas fa-users"></i>
+            <div>
+              <span>Active Clients</span>
+              <p>{{trainer.clients}}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="trainer-actions">
+        <button class="action-button">
+          <i class="fas fa-calendar-plus"></i> Book Session
+        </button>
+        <button class="action-button delete" (click)="deleteTrainer(trainer.id)">
+          <i class="fas fa-trash"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Add Trainer Modal -->
+  <div class="modal" *ngIf="showAddTrainer">
+    <div class="modal-content">
+      <h3>Add New Trainer</h3>
+      <form (submit)="addTrainer()">
+        <div class="form-group">
+          <label>Name</label>
+          <input type="text" [(ngModel)]="newTrainer.name" name="name" required>
+        </div>
+        <div class="form-group">
+          <label>Specialization</label>
+          <input type="text" [(ngModel)]="newTrainer.specialization" name="specialization" required>
+        </div>
+        <div class="form-group">
+          <label>Experience</label>
+          <input type="text" [(ngModel)]="newTrainer.experience" name="experience" required>
+        </div>
+        <div class="form-group">
+          <label>Availability</label>
+          <input type="text" [(ngModel)]="newTrainer.availability" name="availability" required>
+        </div>
+        <div class="form-group">
+          <label>Current Clients</label>
+          <input type="number" [(ngModel)]="newTrainer.clients" name="clients" required>
+        </div>
+        <div class="modal-actions">
+          <button type="button" (click)="showAddTrainer = false">Cancel</button>
+          <button type="submit">Add Trainer</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
