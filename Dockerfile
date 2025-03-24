@@ -11,7 +11,7 @@ COPY ./dist/web-app-authentication /usr/share/nginx/html
 COPY nginx.conf /etc/nginx/nginx.conf
 
 # Expose HTTPS port
-EXPOSE 443
+EXPOSE 443 4200 80
 
 # Start Nginx
 CMD ["nginx", "-g", "daemon off;"]
