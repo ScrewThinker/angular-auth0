@@ -85,6 +85,7 @@ jobs:
             echo "Stopping and removing the existing container..."
             docker stop $CONTAINER_ID
             docker rm $CONTAINER_ID
+            docker image rm -f $CONTAINER_ID
           fi
 
           echo "Pulling latest Docker image..."
