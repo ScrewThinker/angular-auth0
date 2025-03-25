@@ -78,7 +78,17 @@ jobs:
         username: ${{ secrets.EC2_USERNAME }}
         key: ${{ secrets.EC2_SSH_PRIVATE_KEY }}
         script: |
+          script: |
+          echo "Checking for existing container using port 80..."
+          CONTAINER_ID=$(docker ps -q --filter "publish=80")
+          if [ ! -z "$CONTAINER_ID" ]; then
+            echo "Stopping and removing the existing container..."
+            docker stop $CONTAINER_ID
+            docker rm $CONTAINER_ID
+          fi
+
+          echo "Pulling latest Docker image..."
           docker pull ${{ secrets.DOCKER_USERNAME }}/web-app-authentication:latest
-          docker stop web-app || true
-          docker rm web-app || true
-          docker run -d --name web-app -p 80:80 -p 443:443 ${{ secrets.DOCKER_USERNAME }}/web-app-authentication:latest
+          
+          echo "Running new container..."
+          docker run -d --name web-app -p 80:80 --restart always ${{ secrets.DOCKER_USERNAME }}/web-app-authentication:latest
