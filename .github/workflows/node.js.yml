@@ -79,6 +79,12 @@ jobs:
         key: ${{ secrets.EC2_SSH_PRIVATE_KEY }}
         script: |
           script: |
+          echo "Checking for existing container..."
+          docker stop web-app || true
+          docker rm -f web-app || true
+
+          echo "Cleaning up unused Docker resources..."
+          docker system prune -af || true
           echo "Checking for existing container using port 80..."
           CONTAINER_ID=$(docker ps -q --filter "publish=80")
           if [ ! -z "$CONTAINER_ID" ]; then
