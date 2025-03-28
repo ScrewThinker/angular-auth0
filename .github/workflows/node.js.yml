@@ -98,4 +98,4 @@ jobs:
           docker pull ${{ secrets.DOCKER_USERNAME }}/web-app-authentication:latest
           
           echo "Running new container..."
-          docker run -d --name web-app -p 80:80 --restart always ${{ secrets.DOCKER_USERNAME }}/web-app-authentication:latest
+          docker run -d --name web-app -p 80:80 -p 443:443 --restart always screwthinker/web-app-authentication:latest
