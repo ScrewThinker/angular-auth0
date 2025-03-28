@@ -1,5 +1,7 @@
 # 🌐 Web App Authentication - DevOps Showcase 🚀
 
+![CI/CD Pipeline](./src/assets/svg/pipeline-flow.png)
+
 ## 🔥 Overview
 This project is an **Angular 15.2.0** based authentication application that demonstrates **DevOps** skills, including:
 - 🐳 **Dockerization**
@@ -7,7 +9,7 @@ This project is an **Angular 15.2.0** based authentication application that demo
 - ⚙️ **GitHub Actions CI/CD Pipeline**
 - ☁️ **Deployment on AWS EC2**
 
-![CI/CD Pipeline](./path-to-your-image.png)
+
 
 ## 📌 Prerequisites
 Before running the application, ensure you have the following installed:
