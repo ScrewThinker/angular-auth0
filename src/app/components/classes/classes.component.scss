@@ -73,49 +73,49 @@
     }
   }
 
-  // .class-info {
-  //   padding: 1.5rem;
+  .class-info {
+    padding: 1.5rem;
 
-  //   p {
-  //     margin: 0.5rem 0;
-  //     color: #7f8c8d;
-  //     display: flex;
-  //     align-items: center;
-  //     gap: 0.5rem;
+    p {
+      margin: 0.5rem 0;
+      color: #7f8c8d;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
 
-  //     i {
-  //       color: #3498db;
-  //     }
-  //   }
+      i {
+        color: #3498db;
+      }
+    }
 
-  //   .enrollment-status {
-  //     margin-top: 1rem;
+    .enrollment-status {
+      margin-top: 1rem;
 
-  //     .enrollment-text {
-  //       display: flex;
-  //       justify-content: space-between;
-  //       margin-bottom: 0.5rem;
-  //       color: #7f8c8d;
-  //       font-size: 0.9rem;
-  //     }
+      .enrollment-text {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 0.5rem;
+        color: #7f8c8d;
+        font-size: 0.9rem;
+      }
 
-  //     .enrollment-bar {
-  //       height: 8px;
-  //       background: #eee;
-  //       border-radius: 4px;
-  //       overflow: hidden;
+      .enrollment-bar {
+        height: 8px;
+        background: #eee;
+        border-radius: 4px;
+        overflow: hidden;
 
-  //       .enrollment-progress {
-  //         height: 100%;
-  //         transition: width 0.3s ease;
+        .enrollment-progress {
+          height: 100%;
+          transition: width 0.3s ease;
 
-  //         &.low { background: #2ecc71; }
-  //         &.medium { background: #f39c12; }
-  //         &.high { background: #e74c3c; }
-  //       }
-  //     }
-  //   }
-  // }
+          &.low { background: #2ecc71; }
+          &.medium { background: #f39c12; }
+          &.high { background: #e74c3c; }
+        }
+      }
+    }
+  }
 
   .class-actions {
     padding: 1rem;
