@@ -1,50 +1,55 @@
-Web App Authentication - DevOps Showcase
+# 🌐 Web App Authentication - DevOps Showcase 🚀
 
-Overview
+![CI/CD Pipeline](./src/assets/svg/pipeline-flow.png)
 
-This project is an Angular-based authentication application built with Angular 15.2.0. The main purpose of this project is to showcase DevOps skills, including Dockerization, SSL configuration, GitHub Actions pipeline setup, and deployment on an EC2 instance.
+## 🔥 Overview
+This project is an **Angular 15.2.0** based authentication application that demonstrates **DevOps** skills, including:
+- 🐳 **Dockerization**
+- 🔐 **SSL Configuration**
+- ⚙️ **GitHub Actions CI/CD Pipeline**
+- ☁️ **Deployment on AWS EC2**
 
-Prerequisites
 
-Ensure you have the following installed before running the application:
 
-Node.js (v18.20.3 or later)
+## 📌 Prerequisites
+Before running the application, ensure you have the following installed:
+✅ **Node.js** (v18.20.3 or later)  
+✅ **npm** (Node Package Manager)  
+✅ **Docker** (for containerization)  
+✅ **AWS EC2 Instance** (for deployment)  
 
-npm (Node Package Manager)
+---
 
-Docker (for containerization)
-
-An AWS EC2 instance (for deployment)
-
-Installation and Running Locally
-
-To run the project on your local machine:
-
-Clone the repository:
-
+## 🏗️ Installation & Running Locally
+### 1️⃣ Clone the Repository
+```sh
 git clone <repo-url>
-cd <repo-name>
+cd <repo-folder>
+```
 
-Install dependencies:
-
+### 2️⃣ Install Dependencies
+```sh
 npm install
+```
 
-Start the application:
-
+### 3️⃣ Start the Application
+```sh
 npm start
+```
 
-Open the application in your browser at:
-
+### 4️⃣ Open the Application in Your Browser
+```sh
 http://localhost:4200
+```
 
-Docker Setup
+---
 
-This project includes a Dockerfile and Nginx configuration file for containerization and hosting. Since Auth0 requires HTTPS, an SSL certificate is generated and configured within the EC2 instance.
+## 🐳 Docker Setup
+This project includes a **Dockerfile** and **Nginx configuration** for containerization and hosting. 
+Since **Auth0 requires HTTPS**, an **SSL certificate** is generated and configured within the EC2 instance.
 
-Dockerfile
-
-The Dockerfile defines how to containerize the Angular application with Nginx:
-
+### 📦 Dockerfile
+```dockerfile
 # Use Nginx as the base image
 FROM nginx:alpine
 
@@ -58,7 +63,7 @@ COPY ./dist/web-app-authentication /usr/share/nginx/html
 COPY nginx.conf /etc/nginx/nginx.conf
 
 # Copy SSL certificates
-COPY ssl/selfsigned.crt /etc/nginx/ssl/selfsigned.crt
+COPY ssl/selfsigned.crt /etc/nginx/ssl/selfsigned.crt 
 COPY ssl/selfsigned.key /etc/nginx/ssl/selfsigned.key
 
 # Start Nginx
@@ -66,11 +71,10 @@ CMD ["nginx", "-g", "daemon off;"]
 
 # Expose HTTPS and HTTP ports
 EXPOSE 443 80
+```
 
-Nginx Configuration
-
-The nginx.conf file handles redirection from HTTP to HTTPS and serves the Angular application:
-
+### 📜 Nginx Configuration (`nginx.conf`)
+```nginx
 http {
     include mime.types;
     default_type application/octet-stream;
@@ -100,24 +104,22 @@ http {
         }
     }
 }
+```
 
-Setting Up CI/CD Pipeline with GitHub Actions
+---
 
-A GitHub Actions workflow automates the process of building, testing, and pushing the Docker image to Docker Hub.
+## ⚙️ Setting Up CI/CD Pipeline with GitHub Actions
+This workflow automates building, testing, and pushing the Docker image to **Docker Hub**.
 
-GitHub Actions Workflow
-
-The following Node.js CI pipeline is used:
-
+### 🚀 GitHub Actions Workflow (`.github/workflows/main.yml`)
+```yaml
 name: Node.js CI
 
 on:
   push:
-    branches:
-      - main
+    branches: [ main ]
   pull_request:
-    branches:
-      - main
+    branches: [ main ]
 
 jobs:
   build:
@@ -127,7 +129,7 @@ jobs:
         node-version: [18.20.3]
     steps:
       - uses: actions/checkout@v4
-      - name: Use Node.js ${{ matrix.node-version }}
+      - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
@@ -136,25 +138,13 @@ jobs:
       - run: npm ci
       - run: npm run build --if-present
 
-      # Install dependencies for headless Chrome
+      # Install Chrome dependencies for tests
       - name: Install Chrome dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y \
-            fonts-liberation \
-            libappindicator3-1 \
-            libasound2-dev \
-            libatk-bridge2.0-0 \
-            libatk1.0-0 \
-            libcups2 \
-            libdbus-1-3 \
-            libgdk-pixbuf2.0-0 \
-            libnspr4 \
-            libnss3 \
-            libx11-xcb1 \
-            libxcomposite1 \
-            libxrandr2 \
-            xdg-utils
+          sudo apt-get install -y fonts-liberation libappindicator3-1 libasound2-dev \
+            libatk-bridge2.0-0 libatk1.0-0 libcups2 libdbus-1-3 libgdk-pixbuf2.0-0 \
+            libnspr4 libnss3 libx11-xcb1 libxcomposite1 libxrandr2 xdg-utils
 
       # Run tests
       - name: Run tests
@@ -171,69 +161,70 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Build Docker image
-        run: |
-          docker build -t ${{ secrets.DOCKER_USERNAME }}/web-app-authentication:latest .
+        run: docker build -t ${{ secrets.DOCKER_USERNAME }}/web-app-authentication:latest .
 
       - name: Push Docker image to Docker Hub
-        run: |
-          docker push ${{ secrets.DOCKER_USERNAME }}/web-app-authentication:latest
+        run: docker push ${{ secrets.DOCKER_USERNAME }}/web-app-authentication:latest
+```
 
-Deployment on EC2 Instance
+---
 
-Steps to Deploy on EC2:
+## ☁️ Deployment on EC2 Instance
+### 1️⃣ Create an EC2 Instance (Ubuntu)
 
-Create an EC2 instance with Ubuntu.
-
-Install Docker:
-
+### 2️⃣ Install Docker on EC2
+```sh
 sudo apt update
 sudo apt install docker.io -y
 sudo systemctl start docker
 sudo systemctl enable docker
+```
 
-Generate SSL Certificate on EC2:
-
+### 3️⃣ Generate SSL Certificate on EC2
+```sh
 sudo mkdir -p /etc/nginx/ssl
 sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
--keyout /etc/nginx/ssl/selfsigned.key \
--out /etc/nginx/ssl/selfsigned.crt
+    -keyout /etc/nginx/ssl/selfsigned.key \
+    -out /etc/nginx/ssl/selfsigned.crt
+```
 
-Pull and Run Docker Image:
+### 4️⃣ Pull & Run Docker Image
+```sh
+docker pull <your-docker-username>/web-app-authentication:latest
+docker run -d -p 80:80 -p 443:443 <your-docker-username>/web-app-authentication:latest
+```
 
-docker pull <dockerhub-username>/web-app-authentication:latest
-docker run -d -p 80:80 -p 443:443 <dockerhub-username>/web-app-authentication:latest
-
-Access the application using the public IP:
-
+### 5️⃣ Access the Application 🖥️
+```sh
 https://<EC2_PUBLIC_IP>
+```
 
-Auth0 Configuration
+---
 
-Since Auth0 requires a secure origin (HTTPS), ensure that the callback URL is correctly configured in your Auth0 dashboard:
+## 🔐 Auth0 Configuration
+Since **Auth0** requires a **secure origin (HTTPS)**, configure it in your Auth0 dashboard:
 
-Navigate to Auth0 Dashboard → Applications → Your App
-
-Under Allowed Callback URLs, add:
-
+✅ **Allowed Callback URLs:**
+```
 https://<EC2_PUBLIC_IP>
-
-Under Allowed Web Origins, add:
-
+```
+✅ **Allowed Web Origins:**
+```
 https://<EC2_PUBLIC_IP>
+```
 
-Conclusion
+---
 
-This project demonstrates an end-to-end DevOps pipeline involving:
-
-Angular development and local setup
-
-Dockerization and Nginx configuration
-
-CI/CD automation using GitHub Actions
-
-Deployment on EC2 with SSL configuration
-
-Auth0 authentication setup with HTTPS
+## 🎯 Conclusion
+This project successfully showcases:
+✅ **Angular development & local setup**
+✅ **Dockerization & Nginx configuration**
+✅ **CI/CD automation using GitHub Actions**
+✅ **Deployment on AWS EC2 with SSL**
+✅ **Auth0 authentication with HTTPS**
 
 🚀 Now, you can access your application securely over HTTPS! 🎉
 
+---
+
+💡 **Like this project? Give it a ⭐ on GitHub!** 💡
